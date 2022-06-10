@@ -18,3 +18,5 @@ use App\Http\Controllers\UrlController;
 Route::get('/', [UrlController::class, 'index']);
 
 Route::resource('/urls', UrlController::class);
+
+Route::inertia('about', 'About')->name('about-me');

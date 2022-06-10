@@ -37,6 +37,9 @@
             <li class="nav-item">
               <Link class="nav-link" href="/urls/">Urls</Link>
             </li>
+            <li class="nav-item">
+              <Link class="nav-link" :href="route('about-me')">About US</Link>
+            </li>
           </ul>
           <form class="d-flex">
             <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">

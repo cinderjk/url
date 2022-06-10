@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Url;
-use Inertia\Inertia;
+use App\Http\Resources\UrlResource;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
@@ -17,12 +17,10 @@ class UrlController extends Controller
      */
     public function index()
     {
-        $urls = Url::latest()->get();
+        $urls = UrlResource::collection(Url::latest()->get());
 
         //render with data "urls"
-        return Inertia::render('Url/Index', [
-            'urls' => $urls
-        ]);
+        return inertia('Url/Index', compact('urls'));
     }
 
     /**
@@ -32,7 +30,7 @@ class UrlController extends Controller
      */
     public function create()
     {
-        return Inertia::render('Url/Create');
+        return inertia('Url/Create');
     }
 
     public function store(Request $request)
@@ -76,9 +74,7 @@ class UrlController extends Controller
      */
     public function edit(Url $url)
     {
-        return Inertia::render('Url/Edit', [
-            'url' => $url
-        ]);
+        return inertia('Url/Edit', compact('url'));
     }
 
     public function update(Request $request, Url $url)
