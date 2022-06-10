@@ -45,7 +45,7 @@
                     </thead>
                     <tbody>
                         <tr v-for="url in urls" :key="url.id">
-                            <td>{{ url.hash }}</td>
+                            <td>https://url.test/{{ url.hash }}</td>
                             <td>{{ url.original_url }}</td>
                             <td class="text-center">
                                 <Link :href="`/urls/${url.id}/edit`" class="btn btn-sm btn-primary me-2">EDIT</Link>

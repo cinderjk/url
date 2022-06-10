@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Url;
 use Inertia\Inertia;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 
 class UrlController extends Controller
@@ -41,7 +42,7 @@ class UrlController extends Controller
             'link'   => 'required',
         ]);
 
-        $hash = md5($request->link);
+        $hash = Str::random(7);
 
         //create url
         $url = Url::create([
