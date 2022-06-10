@@ -3,8 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Url;
-use App\Http\Requests\StoreUrlRequest;
-use App\Http\Requests\UpdateUrlRequest;
+use Inertia\Inertia;
+use Illuminate\Http\Request;
+
 
 class UrlController extends Controller
 {
@@ -15,7 +16,12 @@ class UrlController extends Controller
      */
     public function index()
     {
-        //
+        $urls = Url::latest()->get();
+
+        //render with data "urls"
+        return Inertia::render('Url/Index', [
+            'urls' => $urls
+        ]);
     }
 
     /**
@@ -25,18 +31,29 @@ class UrlController extends Controller
      */
     public function create()
     {
-        //
+        return Inertia::render('Url/Create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \App\Http\Requests\StoreUrlRequest  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(StoreUrlRequest $request)
+    public function store(Request $request)
     {
-        //
+        //set validation
+        $request->validate([
+            'link'   => 'required',
+        ]);
+
+        $hash = md5($request->link);
+
+        //create url
+        $url = Url::create([
+            'user_id'     => 1,
+            'hash'        => $hash,
+            'original_url'   => $request->link,
+            'created_at' => now(),
+        ]);
+
+        if ($url) {
+            return to_route('urls.index')->with('message', 'Data Berhasil Disimpan!');
+        }
     }
 
     /**
@@ -58,19 +75,31 @@ class UrlController extends Controller
      */
     public function edit(Url $url)
     {
-        //
+        return Inertia::render('Url/Edit', [
+            'url' => $url
+        ]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \App\Http\Requests\UpdateUrlRequest  $request
-     * @param  \App\Models\Url  $url
-     * @return \Illuminate\Http\Response
-     */
-    public function update(UpdateUrlRequest $request, Url $url)
+    public function update(Request $request, Url $url)
     {
-        //
+        //set validation
+        $request->validate([
+            'link'   => 'required',
+        ]);
+
+        $hash = md5($request->link);
+
+        //update post
+        $url->update([
+            'user_id'       => 1,
+            'hash'          => $hash,
+            'original_url'  => $request->link,
+            'created_at'    => now(),
+        ]);
+
+        if ($url) {
+            return to_route('urls.index')->with('message', 'Data Berhasil Diupdate!');
+        }
     }
 
     /**

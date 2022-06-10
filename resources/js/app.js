@@ -8,6 +8,6 @@ const el = document.getElementById('app')
 createApp({
   render: () => h(App, {
     initialPage: JSON.parse(el.dataset.page),
-    resolveComponent: name => require(`./pages/${name}`).default,
+    resolveComponent: name => require(`./Pages/${name}`).default,
   })
 }).use(plugin).mount(el)

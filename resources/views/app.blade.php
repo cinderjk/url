@@ -12,7 +12,7 @@
             background-color: lightgray
         }
     </style>
-    <title>Document</title>
+    <title>{{ config('app.name') }}</title>
 </head>
 
 <body>
